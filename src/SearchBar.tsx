@@ -1,26 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, FormEvent } from "react";
+import { IApi } from "./store/Interface";
 
-const SearchBar = () => {
+export interface ISearchBar {
+  setApiSettings: React.Dispatch<React.SetStateAction<IApi>>;
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SearchBar: React.FC<ISearchBar> = ({ setApiSettings, setCity }) => {
   const GOOGLE_API_KEY = "AIzaSyDmLCYjIrzQnk4eV_pxb6aY_zyO3vK-9MU";
-
   const refFormInput = useRef<HTMLInputElement>(null);
-  let autocomplete: any = null;
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // 'type guard'
-    if (refFormInput.current != null) {
-      // console.log(refFormInput.current.value);
-      // console.log(refFormInput.current);
-      refFormInput.current.value = "";
-    }
-  };
-
-  const onPlaceSelected = (place: any) => {
-    console.log("plejs");
-
-    console.log(place);
   };
 
   const options = {
@@ -30,17 +21,31 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
-    if (refFormInput.current != null) {
-      refFormInput.current.focus();
-    }
-    if (refFormInput.current != null) {
-      autocomplete = new google.maps.places.Autocomplete(
-        refFormInput.current,
-        options
+    if (refFormInput.current) {
+      const searchBox: any = new google.maps.places.SearchBox(
+        refFormInput.current
       );
-      autocomplete.addListener("place_changed", () => {
-        console.log(autocomplete.getPlace().geometry.location.lat());
-        console.log(autocomplete.getPlace().geometry.location.lng());
+      refFormInput.current.focus();
+      searchBox.addListener("places_changed", () => {
+        if (refFormInput.current) {
+          const places: any = searchBox.getPlaces()[0];
+          console.log(places.photos[0].getUrl());
+
+          const newLat: string = places.geometry.location.lat().toString();
+          const newLon: string = places.geometry.location.lng().toString();
+          console.log(newLat, newLon);
+
+          setApiSettings({
+            link: "https://api.openweathermap.org/data/2.5/onecall?",
+            key: "ad44ec1e12a563fb81adb439af6fb615",
+            // lon: newLon,
+            // lat: newLat,
+            unit: "metric", // "imperial"
+            lang: "pl",
+          });
+          refFormInput.current.value = "";
+          // setCity('')
+        }
       });
     }
   }, []);

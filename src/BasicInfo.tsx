@@ -6,6 +6,7 @@ export interface IBasicInfo {
   temperature: number;
   description: string;
   icon: string;
+  city: string;
 }
 
 const BasicInfo: React.FC<IBasicInfo> = ({
