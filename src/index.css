@@ -71,7 +71,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   color: white;
 }
 
@@ -98,9 +98,8 @@ body {
 .forecast {
   height: 100px;
   width: 100%;
-
-  border: 1px solid;
-  border-radius: 5px;
+  border-top: 1px solid;
+  /* border-radius: 5px; */
   display: flex;
   justify-content: space-around;
   align-items: center;

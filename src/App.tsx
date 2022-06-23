@@ -36,7 +36,7 @@ const App: React.FC = () => {
   return (
     <main className="container">
       <SearchBar setApiSettings={setApiSettings} setCity={setCity} />
-      {isLoaded ? (
+      {city && isLoaded ? (
         <BasicInfo
           alerts={weatherData.alerts}
           temperature={weatherData.current.temp}
@@ -44,8 +44,10 @@ const App: React.FC = () => {
           icon={weatherData.current.weather[0].icon}
           city={city}
         />
-      ) : (
+      ) : city ? (
         <Loading /> //TODO: fetch styling
+      ) : (
+        ""
       )}
       {isLoaded && <Forecast daily={weatherData.daily} />}
     </main>

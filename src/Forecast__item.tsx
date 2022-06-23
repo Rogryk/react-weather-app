@@ -1,11 +1,16 @@
 import React from "react";
 
 export interface IForecastItem {
-  icon?: string;
+  icon: string;
   temperature: number;
+  weekDay: string;
 }
 
-const Forecast__item: React.FC<IForecastItem> = ({ icon, temperature }) => {
+const Forecast__item: React.FC<IForecastItem> = ({
+  icon,
+  temperature,
+  weekDay,
+}) => {
   const iconPath = `http://openweathermap.org/img/wn/${icon}.png`;
 
   return (
@@ -14,7 +19,7 @@ const Forecast__item: React.FC<IForecastItem> = ({ icon, temperature }) => {
         <img src={iconPath}></img>
       </div>
       <p className="item__temperature">{temperature}</p>
-      <p className="item__day">monday</p>
+      <p className="item__day">{weekDay}</p>
     </article>
   );
 };
