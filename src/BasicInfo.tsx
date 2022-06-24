@@ -20,7 +20,7 @@ const BasicInfo: React.FC<IBasicInfo> = ({
     <section className="basic-info">
       <h2 className="basic-info__city">{city}</h2>{" "}
       {/*TODO:limit size of cityname div */}
-      <p className="basic-info__temperature">{temperature}</p>
+      <p className="basic-info__temperature">{temperature.toFixed(1)}</p>
       <article className="basic-info__description">{description}</article>
     </section>
   );
