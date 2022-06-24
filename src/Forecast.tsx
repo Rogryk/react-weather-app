@@ -13,7 +13,6 @@ export const WEEK_DAYS: string[] = [
 
 const Forecast: React.FC<any> = (props) => {
   const date = new Date();
-  console.log(date.getDay());
 
   return (
     <section className="forecast">
@@ -23,7 +22,10 @@ const Forecast: React.FC<any> = (props) => {
             key={index}
             temperature={day.temp.day}
             icon={day.weather[0].icon}
-            weekDay={WEEK_DAYS[date.getDay() + index - 1]}
+            weekDay={
+              WEEK_DAYS[date.getDay() + index] ||
+              WEEK_DAYS[date.getDay() + index - 7]
+            }
           />
         );
       })}
