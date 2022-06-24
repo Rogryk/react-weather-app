@@ -1,12 +1,19 @@
 import React, { useState, useEffect, useRef, FormEvent } from "react";
-import { IApi } from "./store/Interface";
+import { IApi, ILocation } from "./store/Interface";
 
 export interface ISearchBar {
   setApiSettings: React.Dispatch<React.SetStateAction<IApi>>;
   setCity: React.Dispatch<React.SetStateAction<string>>;
+  setLocation: React.Dispatch<React.SetStateAction<ILocation>>;
+  setBackgroundImage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SearchBar: React.FC<ISearchBar> = ({ setApiSettings, setCity }) => {
+const SearchBar: React.FC<ISearchBar> = ({
+  setApiSettings,
+  setCity,
+  setLocation,
+  setBackgroundImage,
+}) => {
   const GOOGLE_API_KEY = "AIzaSyDmLCYjIrzQnk4eV_pxb6aY_zyO3vK-9MU";
   const refFormInput = useRef<HTMLInputElement>(null);
 
@@ -21,19 +28,24 @@ const SearchBar: React.FC<ISearchBar> = ({ setApiSettings, setCity }) => {
   };
 
   useEffect(() => {
+    let searchBox: any;
     if (refFormInput.current) {
-      const searchBox: any = new google.maps.places.SearchBox(
-        refFormInput.current
-      );
+      searchBox = new google.maps.places.SearchBox(refFormInput.current);
       refFormInput.current.focus();
       searchBox.addListener("places_changed", () => {
         if (refFormInput.current) {
           const places: any = searchBox.getPlaces()[0];
-          console.log(places.photos[0].getUrl());
+          // console.log(places.photos[0].getUrl());
 
           const newLat: string = places.geometry.location.lat().toString();
           const newLon: string = places.geometry.location.lng().toString();
-          console.log(newLat, newLon);
+          console.log(places.name);
+          setLocation({
+            lon: newLon,
+            lat: newLat,
+          });
+          setCity(places.name);
+          setBackgroundImage(places.photos[0].getUrl());
 
           setApiSettings({
             link: "https://api.openweathermap.org/data/2.5/onecall?",
@@ -44,7 +56,6 @@ const SearchBar: React.FC<ISearchBar> = ({ setApiSettings, setCity }) => {
             lang: "pl",
           });
           refFormInput.current.value = "";
-          // setCity('')
         }
       });
     }

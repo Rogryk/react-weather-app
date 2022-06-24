@@ -17,7 +17,7 @@ const Forecast: React.FC<any> = (props) => {
 
   return (
     <section className="forecast">
-      {props.daily.slice(0, 3).map((day: any, index: number) => {
+      {props.daily.slice(0, 7).map((day: any, index: number) => {
         return (
           <Forecast__item
             key={index}

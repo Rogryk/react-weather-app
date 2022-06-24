@@ -14,10 +14,12 @@ const BasicInfo: React.FC<IBasicInfo> = ({
   temperature,
   description,
   icon,
+  city,
 }) => {
   return (
     <section className="basic-info">
-      <h2 className="basic-info__city">warszawa</h2>
+      <h2 className="basic-info__city">{city}</h2>{" "}
+      {/*TODO:limit size of cityname div */}
       <p className="basic-info__temperature">{temperature}</p>
       <article className="basic-info__description">{description}</article>
     </section>
