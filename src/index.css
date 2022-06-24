@@ -100,8 +100,16 @@ body {
 }
 
 .basic-info__city {
+  max-height: 200px;
   font-size: 3rem;
   text-transform: capitalize;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.basic-info__city::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 .basic-info__temperature {
