@@ -17,7 +17,7 @@ const App: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const container = useRef<any>(null);
-  // const container__background = useRef<any>(null);
+  const background = useRef<any>(null);
 
   useEffect(() => {
     const apiLink =
@@ -35,6 +35,7 @@ const App: React.FC = () => {
         .then(() => {
           if (container.current != null) {
             container.current.classList.remove("minimize");
+            background.current.style.backgroundImage = `url(${backgroundImage})`;
           }
         })
         .catch((error) => console.log(error));
@@ -44,29 +45,32 @@ const App: React.FC = () => {
 
   // display
   return (
-    <main ref={container} className="container minimize">
-      {/* <div className="container__background"></div> */}
-      <SearchBar
-        setApiSettings={setApiSettings}
-        setCity={setCity}
-        setLocation={setLocation}
-        setBackgroundImage={setBackgroundImage}
-      />
-      {city && isLoaded ? (
-        <BasicInfo
-          alerts={weatherData.alerts}
-          temperature={weatherData.current.temp}
-          description={weatherData.current.weather[0].description}
-          icon={weatherData.current.weather[0].icon}
-          city={city}
+    <>
+      <div ref={background} className="background"></div>
+      <main ref={container} className="container minimize">
+        {/* <div className="container__background"></div> */}
+        <SearchBar
+          setApiSettings={setApiSettings}
+          setCity={setCity}
+          setLocation={setLocation}
+          setBackgroundImage={setBackgroundImage}
         />
-      ) : city ? (
-        <Loading /> //TODO: fetch styling
-      ) : (
-        ""
-      )}
-      {city && isLoaded && <Forecast daily={weatherData.daily} />}
-    </main>
+        {city && isLoaded ? (
+          <BasicInfo
+            alerts={weatherData.alerts}
+            temperature={weatherData.current.temp}
+            description={weatherData.current.weather[0].description}
+            icon={weatherData.current.weather[0].icon}
+            city={city}
+          />
+        ) : city ? (
+          <Loading /> //TODO: fetch styling
+        ) : (
+          ""
+        )}
+        {city && isLoaded && <Forecast daily={weatherData.daily} />}
+      </main>
+    </>
   );
 };
 
