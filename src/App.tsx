@@ -16,44 +16,59 @@ const App: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
-  const container = useRef<any>(null);
-  const background = useRef<any>(null);
+  const refContainer = useRef<any>(null);
+  const refBackground = useRef<any>(null);
+
+  const fetchData = async (apiLink: string) => {
+    let response: any;
+    try {
+      response = await fetch(apiLink);
+      const data = await response.json();
+      if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+      }
+      if (!data) {
+        const message = `An error has occured: empty data`;
+        throw new Error(message);
+      }
+      setWeatherData(data);
+      setIsLoaded(true);
+    } catch (error) {
+      // alert("An error occured. Check your connection and try again later.");
+      alert(error);
+    }
+  };
+
+  const showDisplay = () => {
+    if (refContainer.current != null) {
+      refContainer.current.classList.remove("minimize");
+      refBackground.current.style.backgroundImage = `url(${backgroundImage})`;
+    }
+  };
 
   useEffect(() => {
     const apiLink =
       apiSettings.link +
       `lat=${location.lat}&lon=${location.lon}&units=${apiSettings.unit}&lang=${apiSettings.lang}&appid=${apiSettings.key}`;
     if (location.lon && location.lat) {
-      fetch(apiLink)
-        .then((response) => response.json())
-        .then((response) => {
-          // console.log(response);
-          return response;
-        })
-        .then((data) => setWeatherData(data))
-        .then(() => setIsLoaded(true))
-        .then(() => {
-          if (container.current != null) {
-            container.current.classList.remove("minimize");
-            background.current.style.backgroundImage = `url(${backgroundImage})`;
-          }
-        })
-        .catch((error) => console.log(error));
+      fetchData(apiLink);
+      showDisplay();
     }
-    console.log(backgroundImage);
   }, [apiSettings]);
 
   // display
   return (
     <>
-      <div ref={background} className="background"></div>
-      <main ref={container} className="container minimize">
+      <img ref={refBackground} className="background" loading="lazy"></img>
+      <main ref={refContainer} className="container minimize">
         {/* <div className="container__background"></div> */}
         <SearchBar
           setApiSettings={setApiSettings}
           setCity={setCity}
           setLocation={setLocation}
           setBackgroundImage={setBackgroundImage}
+          setIsLoaded={setIsLoaded}
         />
         {city && isLoaded ? (
           <BasicInfo

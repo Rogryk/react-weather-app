@@ -6,6 +6,7 @@ export interface ISearchBar {
   setCity: React.Dispatch<React.SetStateAction<string>>;
   setLocation: React.Dispatch<React.SetStateAction<ILocation>>;
   setBackgroundImage: React.Dispatch<React.SetStateAction<string>>;
+  setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SearchBar: React.FC<ISearchBar> = ({
@@ -13,6 +14,7 @@ const SearchBar: React.FC<ISearchBar> = ({
   setCity,
   setLocation,
   setBackgroundImage,
+  setIsLoaded,
 }) => {
   const GOOGLE_API_KEY = "AIzaSyDmLCYjIrzQnk4eV_pxb6aY_zyO3vK-9MU";
   const refFormInput = useRef<HTMLInputElement>(null);
@@ -33,26 +35,21 @@ const SearchBar: React.FC<ISearchBar> = ({
       searchBox = new google.maps.places.SearchBox(refFormInput.current);
       refFormInput.current.focus();
       searchBox.addListener("places_changed", () => {
+        setIsLoaded(false);
         if (refFormInput.current) {
           const places: any = searchBox.getPlaces()[0];
-          // console.log(places.photos[0].getUrl());
-
           const newLat: string = places.geometry.location.lat().toString();
           const newLon: string = places.geometry.location.lng().toString();
-          console.log(places.name);
           setLocation({
             lon: newLon,
             lat: newLat,
           });
           setCity(places.name);
           setBackgroundImage(places.photos[0].getUrl());
-
           setApiSettings({
             link: "https://api.openweathermap.org/data/2.5/onecall?",
             key: "ad44ec1e12a563fb81adb439af6fb615",
-            // lon: newLon,
-            // lat: newLat,
-            unit: "metric", // "imperial"
+            unit: "metric", // or "imperial"
             lang: "pl",
           });
           refFormInput.current.value = "";
