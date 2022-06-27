@@ -1,0 +1,104 @@
+/* Basic Info */
+.basic-info {
+  margin: 0 auto;
+  min-height: 200px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid black; */
+  color: white;
+}
+
+.basic-info__city {
+  max-height: 200px;
+  font-size: 3rem;
+  text-transform: capitalize;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.basic-info__city::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.basic-info__temperature {
+  height: fit-content;
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.basic-info__temperature::after {
+  content: "\2103";
+}
+
+.basic-info__description {
+  font-size: 1.3rem;
+}
+
+/* Forecast */
+.forecast {
+  height: 110px;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  color: white;
+  overflow-x: scroll;
+}
+
+.forecast::-webkit-scrollbar-thumb {
+  background: #000;
+}
+
+.forecast__item {
+  height: 90%;
+  min-width: 34%;
+  border-right: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.forecast__item:last-child {
+  border: none;
+}
+
+.item__icon {
+  height: 40px;
+  width: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid; */
+}
+
+/* Loading */
+.loading-box {
+  height: 100%;
+  width: 100%;
+  padding-top: 20%;
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  color: white;
+}
+
+#autocomplete {
+  z-index: 99999;
+}
+
+@media screen and (max-width: 350px) {
+  .basic-info__city {
+    font-size: 2rem;
+  }
+  .basic-info__temperature {
+    font-size: 4rem;
+  }
+  .basic-info__description {
+    font-size: 1rem;
+  }
+}

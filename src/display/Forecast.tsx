@@ -1,6 +1,7 @@
 import React from "react";
 import Forecast__item from "./Forecast__item";
-import { WEEK_DAYS } from "./store/Constants";
+import { WEEK_DAYS } from "../utils/Constants";
+import "./style.css";
 
 const Forecast: React.FC<any> = (props) => {
   const date = new Date();

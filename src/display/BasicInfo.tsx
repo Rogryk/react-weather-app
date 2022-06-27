@@ -1,6 +1,6 @@
 import React from "react";
-import { IWeather } from "./store/types";
-import { IBasicInfo } from "./store/Interface";
+import { IBasicInfo } from "../utils/types";
+import "./style.css";
 
 const BasicInfo: React.FC<IBasicInfo> = ({
   alerts,

@@ -1,5 +1,6 @@
 import React from "react";
-import { IForecastItem } from "./store/Interface";
+import { IForecastItem } from "../utils/types";
+import "./style.css";
 
 const Forecast__item: React.FC<IForecastItem> = ({
   icon,

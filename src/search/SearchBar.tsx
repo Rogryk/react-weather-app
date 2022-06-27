@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, FormEvent } from "react";
-import { IApi, ILocation, ISearchBar } from "./store/Interface";
+import { IApi, ILocation, ISearchBar } from "../utils/types";
+import "./style.css";
 
 const SearchBar: React.FC<ISearchBar> = ({
   setCity,

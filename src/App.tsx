@@ -1,10 +1,20 @@
+// TODO: weather alerts
+// TODO: advanced info display
+// TODO: tab select for basic/adv info
+// TODO: magnifier icon for search bar
+// TODO: loading icon for search bar
+// TODO: loading icon for background
+// TODO: toggle background image
+// TODO: toggle imperial
+// FIXME: background image size (grey bar)
+
 import React, { useState, useEffect, useRef } from "react";
-import BasicInfo from "./BasicInfo";
-import Forecast from "./Forecast";
-import SearchBar from "./SearchBar";
-import Loading from "./Loading";
-import ApiSettings from "./store/Settings";
-import { IApi, ILocation } from "./store/Interface";
+import BasicInfo from "./display/BasicInfo";
+import Forecast from "./display/Forecast";
+import SearchBar from "./search/SearchBar";
+import Loading from "./display/Loading";
+import ApiSettings from "./utils/Settings";
+import { IApi, ILocation } from "./utils/types";
 
 const App: React.FC = () => {
   const [location, setLocation] = useState<ILocation>({
