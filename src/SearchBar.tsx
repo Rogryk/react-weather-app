@@ -1,32 +1,17 @@
 import React, { useState, useEffect, useRef, FormEvent } from "react";
-import { IApi, ILocation } from "./store/Interface";
-
-export interface ISearchBar {
-  setApiSettings: React.Dispatch<React.SetStateAction<IApi>>;
-  setCity: React.Dispatch<React.SetStateAction<string>>;
-  setLocation: React.Dispatch<React.SetStateAction<ILocation>>;
-  setBackgroundImage: React.Dispatch<React.SetStateAction<string>>;
-  setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { IApi, ILocation, ISearchBar } from "./store/Interface";
 
 const SearchBar: React.FC<ISearchBar> = ({
-  setApiSettings,
   setCity,
   setLocation,
   setBackgroundImage,
   setIsLoaded,
+  isLoaded,
 }) => {
-  const GOOGLE_API_KEY = "AIzaSyDmLCYjIrzQnk4eV_pxb6aY_zyO3vK-9MU";
   const refFormInput = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  };
-
-  const options = {
-    fields: ["place_id", "formatted_address", "geometry", "name"],
-    strictBounds: false,
-    types: ["locality"],
   };
 
   useEffect(() => {
@@ -46,12 +31,6 @@ const SearchBar: React.FC<ISearchBar> = ({
           });
           setCity(places.name);
           setBackgroundImage(places.photos[0].getUrl());
-          setApiSettings({
-            link: "https://api.openweathermap.org/data/2.5/onecall?",
-            key: "ad44ec1e12a563fb81adb439af6fb615",
-            unit: "metric", // or "imperial"
-            lang: "pl",
-          });
           refFormInput.current.value = "";
         }
       });

@@ -2,20 +2,19 @@ import React, { useState, useEffect, useRef } from "react";
 import BasicInfo from "./BasicInfo";
 import Forecast from "./Forecast";
 import SearchBar from "./SearchBar";
-import ApiSettingsFile from "./store/ApiSetting";
 import Loading from "./Loading";
+import ApiSettings from "./store/Settings";
 import { IApi, ILocation } from "./store/Interface";
 
 const App: React.FC = () => {
-  const [apiSettings, setApiSettings] = useState<IApi>(ApiSettingsFile);
   const [location, setLocation] = useState<ILocation>({
     lon: "",
     lat: "",
   });
   const [city, setCity] = useState<string>("");
   const [weatherData, setWeatherData] = useState<any>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const refContainer = useRef<any>(null);
   const refBackground = useRef<any>(null);
 
@@ -43,32 +42,41 @@ const App: React.FC = () => {
   const showDisplay = () => {
     if (refContainer.current != null) {
       refContainer.current.classList.remove("minimize");
-      refBackground.current.style.backgroundImage = `url(${backgroundImage})`;
+      loadImage(backgroundImage).then(() => {
+        refBackground.current.style.backgroundImage = `url(${backgroundImage})`;
+      });
     }
   };
 
+  const loadImage = (src: string) =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+
   useEffect(() => {
     const apiLink =
-      apiSettings.link +
-      `lat=${location.lat}&lon=${location.lon}&units=${apiSettings.unit}&lang=${apiSettings.lang}&appid=${apiSettings.key}`;
+      ApiSettings.link +
+      `lat=${location.lat}&lon=${location.lon}&units=${ApiSettings.unit}&lang=${ApiSettings.lang}&appid=${ApiSettings.key}`;
     if (location.lon && location.lat) {
       fetchData(apiLink);
       showDisplay();
     }
-  }, [apiSettings]);
+  }, [ApiSettings, location]);
 
-  // display
   return (
     <>
       <img ref={refBackground} className="background" loading="lazy"></img>
       <main ref={refContainer} className="container minimize">
         {/* <div className="container__background"></div> */}
         <SearchBar
-          setApiSettings={setApiSettings}
           setCity={setCity}
           setLocation={setLocation}
           setBackgroundImage={setBackgroundImage}
           setIsLoaded={setIsLoaded}
+          isLoaded={isLoaded}
         />
         {city && isLoaded ? (
           <BasicInfo

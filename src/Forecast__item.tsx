@@ -1,10 +1,5 @@
 import React from "react";
-
-export interface IForecastItem {
-  icon: string;
-  temperature: number;
-  weekDay: string;
-}
+import { IForecastItem } from "./store/Interface";
 
 const Forecast__item: React.FC<IForecastItem> = ({
   icon,

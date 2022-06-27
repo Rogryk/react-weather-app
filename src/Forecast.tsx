@@ -1,15 +1,6 @@
 import React from "react";
 import Forecast__item from "./Forecast__item";
-
-export const WEEK_DAYS: string[] = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+import { WEEK_DAYS } from "./store/Constants";
 
 const Forecast: React.FC<any> = (props) => {
   const date = new Date();
