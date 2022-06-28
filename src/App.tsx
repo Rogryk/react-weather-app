@@ -1,6 +1,6 @@
-// TODO: weather alerts
 // TODO: advanced info display
 // TODO: tab select for basic/adv info
+// TODO: add router
 // TODO: magnifier icon for search bar
 // TODO: loading icon for search bar
 // TODO: loading icon for background
@@ -13,6 +13,7 @@ import BasicInfo from "./display/BasicInfo";
 import Forecast from "./display/Forecast";
 import SearchBar from "./search/SearchBar";
 import Loading from "./display/Loading";
+import Alert from "./Alert";
 import ApiSettings from "./utils/Settings";
 import { IApi, ILocation } from "./utils/types";
 
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>([]);
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [isAlertsDisplayed, setIsAlertsDisplayed] = useState(false);
   const refContainer = useRef<any>(null);
   const refBackground = useRef<any>(null);
 
@@ -80,7 +82,6 @@ const App: React.FC = () => {
     <>
       <img ref={refBackground} className="background" loading="lazy"></img>
       <main ref={refContainer} className="container minimize">
-        {/* <div className="container__background"></div> */}
         <SearchBar
           setCity={setCity}
           setLocation={setLocation}
@@ -90,11 +91,12 @@ const App: React.FC = () => {
         />
         {city && isLoaded ? (
           <BasicInfo
-            alerts={weatherData.alerts}
             temperature={weatherData.current.temp}
             description={weatherData.current.weather[0].description}
             icon={weatherData.current.weather[0].icon}
             city={city}
+            alerts={weatherData.alerts}
+            setIsAlertsDisplayed={setIsAlertsDisplayed}
           />
         ) : city ? (
           <Loading /> //TODO: fetch styling
@@ -102,6 +104,12 @@ const App: React.FC = () => {
           ""
         )}
         {city && isLoaded && <Forecast daily={weatherData.daily} />}
+        {isAlertsDisplayed && (
+          <Alert
+            alerts={weatherData.alerts}
+            setIsAlertsDisplayed={setIsAlertsDisplayed}
+          />
+        )}
       </main>
     </>
   );

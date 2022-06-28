@@ -22,7 +22,7 @@ const SearchBar: React.FC<ISearchBar> = ({
       refFormInput.current.focus();
       searchBox.addListener("places_changed", () => {
         setIsLoaded(false);
-        if (refFormInput.current) {
+        if (refFormInput.current != null) {
           const places: any = searchBox.getPlaces()[0];
           const newLat: string = places.geometry.location.lat().toString();
           const newLon: string = places.geometry.location.lng().toString();

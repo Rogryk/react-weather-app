@@ -31,11 +31,12 @@ export interface ISearchBar {
 }
 
 export interface IBasicInfo {
-  alerts: string;
   temperature: number;
   description: string;
   icon: string;
   city: string;
+  alerts: string;
+  setIsAlertsDisplayed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface IForecastItem {

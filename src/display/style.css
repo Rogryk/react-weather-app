@@ -9,6 +9,7 @@
   align-items: center;
   /* border: 1px solid black; */
   color: white;
+  position: relative;
 }
 
 .basic-info__city {
