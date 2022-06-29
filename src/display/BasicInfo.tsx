@@ -13,7 +13,6 @@ const BasicInfo: React.FC<IBasicInfo> = ({
 }) => {
   return (
     <section className="basic-info">
-      <h2 className="basic-info__city">{city}</h2>{" "}
       <p className="basic-info__temperature">{temperature.toFixed(1)}</p>
       {alerts && (
         <button

@@ -1,11 +1,11 @@
-// TODO: advanced info display
-// TODO: tab select for basic/adv info
+// TODO: change days on click at forecast item
 // TODO: add router
 // TODO: magnifier icon for search bar
 // TODO: loading icon for search bar
 // TODO: loading icon for background
 // TODO: toggle background image
 // TODO: toggle imperial
+// FIXME: Uncaught ReferenceError: google is not defined
 // FIXME: background image size (grey bar)
 
 import React, { useState, useEffect, useRef } from "react";
@@ -14,21 +14,27 @@ import Forecast from "./display/Forecast";
 import SearchBar from "./search/SearchBar";
 import Loading from "./display/Loading";
 import Alert from "./Alert";
+import Tabs from "./Tabs";
+import Info from "./display/Info";
 import ApiSettings from "./utils/Settings";
 import { IApi, ILocation } from "./utils/types";
+import AdvancedInfo from "./display/AdvancedInfo";
 
 const App: React.FC = () => {
+  const [weatherData, setWeatherData] = useState<any>([]);
   const [location, setLocation] = useState<ILocation>({
     lon: "",
     lat: "",
   });
+  const [isBasicDisplay, setIsBasicDisplay] = useState(true);
   const [city, setCity] = useState<string>("");
-  const [weatherData, setWeatherData] = useState<any>([]);
+  const [day, setDay] = useState<number>(0); //0 to 8
   const [backgroundImage, setBackgroundImage] = useState<string>("");
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [isAlertsDisplayed, setIsAlertsDisplayed] = useState(false);
   const refContainer = useRef<any>(null);
   const refBackground = useRef<any>(null);
+
+  // console.log(weatherData.daily);
 
   const fetchData = async (apiLink: string) => {
     let response: any;
@@ -90,26 +96,21 @@ const App: React.FC = () => {
           isLoaded={isLoaded}
         />
         {city && isLoaded ? (
-          <BasicInfo
-            temperature={weatherData.current.temp}
-            description={weatherData.current.weather[0].description}
-            icon={weatherData.current.weather[0].icon}
-            city={city}
-            alerts={weatherData.alerts}
-            setIsAlertsDisplayed={setIsAlertsDisplayed}
-          />
+          <>
+            <Tabs setIsBasicDisplay={setIsBasicDisplay} />
+            <Info
+              weatherData={weatherData}
+              city={city}
+              isBasicDisplay={isBasicDisplay}
+              day={day}
+            />
+          </>
         ) : city ? (
           <Loading /> //TODO: fetch styling
         ) : (
           ""
         )}
         {city && isLoaded && <Forecast daily={weatherData.daily} />}
-        {isAlertsDisplayed && (
-          <Alert
-            alerts={weatherData.alerts}
-            setIsAlertsDisplayed={setIsAlertsDisplayed}
-          />
-        )}
       </main>
     </>
   );

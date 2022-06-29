@@ -1,3 +1,13 @@
+.info {
+  height: 55%;
+  width: 100%;
+  position: absolute;
+  top: 92px;
+  padding: 0 10px;
+
+  /* border: 1px solid red; */
+}
+
 /* Basic Info */
 .basic-info {
   margin: 0 auto;
@@ -12,16 +22,18 @@
   position: relative;
 }
 
-.basic-info__city {
+.city {
   max-height: 200px;
+  text-align: center;
   font-size: 3rem;
   text-transform: capitalize;
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
+  /* border: 1px solid red; */
 }
 
-.basic-info__city::-webkit-scrollbar {
+.city::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
@@ -37,6 +49,35 @@
 
 .basic-info__description {
   font-size: 1.3rem;
+}
+
+/* Advanced info */
+.advanced-info {
+  max-height: 55%;
+  width: 100%;
+  color: white;
+
+  /* border: 1px solid orange; */
+}
+
+.city_small {
+  font-size: 1.5rem;
+}
+
+.data-display-container {
+  padding-top: 10px;
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 45% 55%;
+  grid-auto-flow: dense;
+  grid-row-gap: 3px;
+  grid-column-gap: 15px;
+  list-style-type: none;
+}
+
+.data {
+  text-transform: capitalize;
+  text-align: start;
 }
 
 /* Forecast */
@@ -86,6 +127,41 @@
   justify-content: center;
   font-size: 2rem;
   color: white;
+}
+
+/* blocks */
+.center-text-hor {
+  text-align: center;
+}
+.center-text-ver {
+  align-items: center;
+}
+
+.text-small {
+  font-size: 1rem;
+}
+
+.percent::after {
+  content: "%";
+}
+
+.milimeters::after {
+  content: " mm";
+  text-transform: none;
+}
+
+.kmh::after {
+  content: " km/h";
+  text-transform: none;
+}
+
+.pascals::after {
+  content: " hPa";
+  text-transform: none;
+}
+
+.celsius::after {
+  content: "\2103";
 }
 
 #autocomplete {

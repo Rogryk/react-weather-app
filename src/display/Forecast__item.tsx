@@ -14,7 +14,7 @@ const Forecast__item: React.FC<IForecastItem> = ({
       <div className="item__icon">
         <img src={iconPath}></img>
       </div>
-      <p className="item__temperature">{temperature.toFixed(1)}</p>
+      <p className="item__temperature celsius">{temperature.toFixed(1)}</p>
       <p className="item__day">{weekDay}</p>
     </article>
   );
