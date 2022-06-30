@@ -9,7 +9,7 @@ const Info__header: React.FC<IInfo__Header> = ({ city, date }) => {
   return (
     <div className="text-white">
       <h2 className="city city_small">{city}</h2>
-      <h3 className="date center-text-hor text-small">29.06.2022</h3>
+      <h3 className="date center-text-hor text-small">{date}</h3>
     </div>
   );
 };

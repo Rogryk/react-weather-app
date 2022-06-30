@@ -6,11 +6,13 @@ const Forecast__item: React.FC<IForecastItem> = ({
   icon,
   temperature,
   weekDay,
+  setDay,
+  index,
 }) => {
   const iconPath = `http://openweathermap.org/img/wn/${icon}.png`;
 
   return (
-    <article className="forecast__item">
+    <article className="forecast__item" onClick={() => setDay(index)}>
       <div className="item__icon">
         <img src={iconPath}></img>
       </div>

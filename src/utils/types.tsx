@@ -43,4 +43,6 @@ export interface IForecastItem {
   icon: string;
   temperature: number;
   weekDay: string;
+  setDay: React.Dispatch<React.SetStateAction<number>>;
+  index: number;
 }

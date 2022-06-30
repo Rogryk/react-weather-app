@@ -20,14 +20,19 @@ const Info: React.FC<IInfo> = ({ weatherData, city, isBasicDisplay, day }) => {
       ? "0" + (dateObject.getMonth() + 1)
       : dateObject.getMonth() + 1
   }.${dateObject.getFullYear()}`;
-  console.log(dateString);
+  // console.log(dateString);
+  console.log(weatherData);
 
   return (
     <section className="info">
       <Info__header city={city} date={dateString} />
       {isBasicDisplay ? (
         <BasicInfo
-          temperature={weatherData.current.temp}
+          temperature={
+            day === 0
+              ? weatherData.current.temp
+              : weatherData.daily[day].temp.day
+          }
           description={weatherData.current.weather[0].description}
           icon={weatherData.current.weather[0].icon}
           city={city}

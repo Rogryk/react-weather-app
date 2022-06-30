@@ -1,4 +1,4 @@
-// TODO: change days on click at forecast item
+// TODO: change days on click at forecast item (basic)
 // TODO: add router
 // TODO: magnifier icon for search bar
 // TODO: loading icon for search bar
@@ -110,7 +110,9 @@ const App: React.FC = () => {
         ) : (
           ""
         )}
-        {city && isLoaded && <Forecast daily={weatherData.daily} />}
+        {city && isLoaded && (
+          <Forecast daily={weatherData.daily} setDay={setDay} />
+        )}
       </main>
     </>
   );

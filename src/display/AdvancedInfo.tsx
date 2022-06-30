@@ -8,6 +8,7 @@ export interface IAdvancedInfo {
 
 const AdvancedInfo: React.FC<IAdvancedInfo> = ({ weatherData, city, day }) => {
   // console.log(weatherData.daily);
+  // console.log(day);
 
   return (
     <section className="advanced-info">
