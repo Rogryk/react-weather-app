@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, FormEvent } from "react";
 import { IApi, ILocation, ISearchBar } from "../utils/types";
-import magnifierIcon from "../assets/iconmonstr-magnifier-2.svg";
 import "./style.css";
 
 const SearchBar: React.FC<ISearchBar> = ({

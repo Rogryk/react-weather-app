@@ -1,5 +1,4 @@
 // TODO: add router
-// TODO: magnifier icon for search bar
 // TODO: loading icon for search bar
 // TODO: loading icon for background
 // TODO: toggle background image
@@ -96,7 +95,10 @@ const App: React.FC = () => {
         />
         {city && isLoaded ? (
           <>
-            <Tabs setIsBasicDisplay={setIsBasicDisplay} />
+            <Tabs
+              setIsBasicDisplay={setIsBasicDisplay}
+              isBasicDisplay={isBasicDisplay}
+            />
             <Info
               weatherData={weatherData}
               city={city}

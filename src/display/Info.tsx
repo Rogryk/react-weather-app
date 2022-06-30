@@ -33,7 +33,7 @@ const Info: React.FC<IInfo> = ({ weatherData, city, isBasicDisplay, day }) => {
               ? weatherData.current.temp
               : weatherData.daily[day].temp.day
           }
-          description={weatherData.current.weather[0].description}
+          description={weatherData.daily[day].weather[0].description}
           icon={weatherData.current.weather[0].icon}
           city={city}
           alerts={weatherData.alerts}
