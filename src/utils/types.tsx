@@ -28,6 +28,9 @@ export interface ISearchBar {
   setBackgroundImage: React.Dispatch<React.SetStateAction<string>>;
   setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
   isLoaded: boolean;
+  changeBackgroundImage: boolean;
+  setChangeBackgroundImage: React.Dispatch<React.SetStateAction<boolean>>;
+  setUnits: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface IBasicInfo {
@@ -37,6 +40,7 @@ export interface IBasicInfo {
   city: string;
   alerts: string;
   setIsAlertsDisplayed: React.Dispatch<React.SetStateAction<boolean>>;
+  units: string;
 }
 
 export interface IForecastItem {
@@ -44,5 +48,6 @@ export interface IForecastItem {
   temperature: number;
   weekDay: string;
   setDay: React.Dispatch<React.SetStateAction<number>>;
+  units: string;
   index: number;
 }

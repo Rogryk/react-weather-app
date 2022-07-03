@@ -36,6 +36,7 @@ body {
 
 .background {
   height: 100%;
+  min-height: 600px;
   width: 100%;
   position: absolute;
   top: 0;
@@ -73,20 +74,21 @@ body {
 /* Alert */
 .alert-button {
   position: absolute;
-  bottom: 55px;
-  left: -23px;
+  top: 5px;
+  right: 50%;
   border: none;
   background: transparent;
   cursor: pointer;
+  transform: translate(50%, 0);
 }
 
 .alert {
-  height: 50%;
+  height: 110%;
   width: 100%;
-  z-index: 2;
   padding-top: 10px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   position: absolute;
+  top: -20px;
   left: 0;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
@@ -155,11 +157,33 @@ body {
   background: none;
 }
 
+.no-border {
+  border: none;
+}
+
 .text-large {
   font-size: 2rem;
 }
 .text-medium {
   font-size: 1.5rem;
+}
+
+/* unit symbols */
+.metric-temp::after {
+  content: "\2103";
+}
+
+.metric-speed::after {
+  content: " km/h";
+  text-transform: none;
+}
+
+.imperial-temp::after {
+  content: " F";
+}
+
+.imperial-speed::after {
+  content: " mph";
 }
 
 @media screen and (max-width: 350px) {
@@ -180,4 +204,11 @@ body {
   .container {
     width: 250px;
   }
+}
+
+.background-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-43%, -53%);
 }

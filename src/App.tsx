@@ -1,10 +1,4 @@
 // TODO: add router
-// TODO: loading icon for search bar
-// TODO: loading icon for background
-// TODO: toggle background image
-// TODO: toggle imperial
-// FIXME: Uncaught ReferenceError: google is not defined
-// FIXME: background image size (grey bar)
 
 import React, { useState, useEffect, useRef } from "react";
 import BasicInfo from "./display/BasicInfo";
@@ -17,6 +11,7 @@ import Info from "./display/Info";
 import ApiSettings from "./utils/Settings";
 import { IApi, ILocation } from "./utils/types";
 import AdvancedInfo from "./display/AdvancedInfo";
+import { Loader } from "@mantine/core";
 
 const App: React.FC = () => {
   const [weatherData, setWeatherData] = useState<any>([]);
@@ -24,15 +19,19 @@ const App: React.FC = () => {
     lon: "",
     lat: "",
   });
+  const [units, setUnits] = useState<string>("metric");
   const [isBasicDisplay, setIsBasicDisplay] = useState(true);
   const [city, setCity] = useState<string>("");
   const [day, setDay] = useState<number>(0); //0 to 8
-  const [backgroundImage, setBackgroundImage] = useState<string>("");
+  const [changeBackgroundImage, setChangeBackgroundImage] =
+    useState<boolean>(true);
+  const [backgroundImage, setBackgroundImage] = useState<string>(
+    "https://lh3.googleusercontent.com/places/AAcXr8rHqmrf_-XNRmNd90tZ6uu8CwknTUIAJ3nNHLO9-0NSmqfQnUPaJQ5X5t4alQl7dp_pCQqhQndDjUCFjrPEurD3rBsmVAu_uBI=s1600-w3280"
+  );
+  const [isBackgroundLoaded, setIsBackgroundLoaded] = useState<boolean>(true);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const refContainer = useRef<any>(null);
   const refBackground = useRef<any>(null);
-
-  // console.log(weatherData.daily);
 
   const fetchData = async (apiLink: string) => {
     let response: any;
@@ -58,9 +57,11 @@ const App: React.FC = () => {
   const showDisplay = () => {
     if (refContainer.current != null) {
       refContainer.current.classList.remove("minimize");
-      loadImage(backgroundImage).then(() => {
-        refBackground.current.style.backgroundImage = `url(${backgroundImage})`;
-      });
+      changeBackgroundImage &&
+        loadImage(backgroundImage).then(() => {
+          setIsBackgroundLoaded(true);
+          refBackground.current.style.backgroundImage = `url(${backgroundImage})`;
+        });
     }
   };
 
@@ -73,18 +74,27 @@ const App: React.FC = () => {
     });
 
   useEffect(() => {
+    setIsLoaded(false);
     const apiLink =
       ApiSettings.link +
-      `lat=${location.lat}&lon=${location.lon}&units=${ApiSettings.unit}&lang=${ApiSettings.lang}&appid=${ApiSettings.key}`;
+      `lat=${location.lat}&lon=${location.lon}&units=${units}&lang=${ApiSettings.lang}&appid=${ApiSettings.key}`;
     if (location.lon && location.lat) {
+      setIsBackgroundLoaded(false);
       fetchData(apiLink);
       showDisplay();
     }
-  }, [ApiSettings, location]);
+  }, [ApiSettings, location, units]);
 
   return (
     <>
       <img ref={refBackground} className="background" loading="lazy"></img>
+      {!isBackgroundLoaded && changeBackgroundImage ? (
+        <div className="background-loader">
+          <Loader size={100} />
+        </div>
+      ) : (
+        ""
+      )}
       <main ref={refContainer} className="container minimize">
         <SearchBar
           setCity={setCity}
@@ -92,6 +102,9 @@ const App: React.FC = () => {
           setBackgroundImage={setBackgroundImage}
           setIsLoaded={setIsLoaded}
           isLoaded={isLoaded}
+          changeBackgroundImage={changeBackgroundImage}
+          setChangeBackgroundImage={setChangeBackgroundImage}
+          setUnits={setUnits}
         />
         {city && isLoaded ? (
           <>
@@ -104,6 +117,7 @@ const App: React.FC = () => {
               city={city}
               isBasicDisplay={isBasicDisplay}
               day={day}
+              units={units}
             />
           </>
         ) : city ? (
@@ -112,7 +126,7 @@ const App: React.FC = () => {
           ""
         )}
         {city && isLoaded && (
-          <Forecast daily={weatherData.daily} setDay={setDay} />
+          <Forecast daily={weatherData.daily} setDay={setDay} units={units} />
         )}
       </main>
     </>

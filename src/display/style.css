@@ -15,7 +15,7 @@
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   /* border: 1px solid black; */
   color: white;
@@ -44,7 +44,6 @@
 }
 
 .basic-info__temperature::after {
-  content: "\2103";
 }
 
 .basic-info__description {
@@ -56,7 +55,7 @@
 
 /* Advanced info */
 .advanced-info {
-  max-height: 55%;
+  min-height: 75%;
   width: 100%;
   color: white;
 
@@ -68,12 +67,13 @@
 }
 
 .data-display-container {
+  height: 100%;
   padding-top: 10px;
   display: grid;
   justify-content: space-between;
   grid-template-columns: 45% 55%;
   grid-auto-flow: dense;
-  grid-row-gap: 3px;
+  grid-row-gap: 10px;
   grid-column-gap: 15px;
   list-style-type: none;
 }
@@ -143,6 +143,20 @@
 }
 .center-text-ver {
   align-items: center;
+}
+
+.center-ver {
+  display: flex;
+  justify-content: center;
+}
+
+.center-hor {
+  margin: auto;
+}
+
+.column-display {
+  display: flex;
+  flex-direction: column;
 }
 
 .text-small {

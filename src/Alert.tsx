@@ -8,7 +8,7 @@ const Alert: React.FC<any> = ({ alerts, setIsAlertsDisplayed }) => {
   console.log(endDate);
 
   return (
-    <div className="alert center">
+    <div className="alert">
       <button
         className="x-exit-btn"
         type="submit"

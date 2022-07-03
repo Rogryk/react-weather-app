@@ -1,20 +1,27 @@
 import React from "react";
+import { unixToUtcTime } from "../utils/Functions";
 
 export interface IAdvancedInfo {
   weatherData: any;
   city: string;
   day: number;
+  units: string;
 }
 
-const AdvancedInfo: React.FC<IAdvancedInfo> = ({ weatherData, city, day }) => {
-  // console.log(weatherData.daily);
-  // console.log(day);
-
+const AdvancedInfo: React.FC<IAdvancedInfo> = ({
+  weatherData,
+  city,
+  day,
+  units,
+}) => {
   return (
     <section className="advanced-info">
-      {/* <div className="data-display-container"> */}
       <ul className="data-display-container">
-        <li className="data celsius">
+        <li
+          className={`data ${
+            units === "metric" ? "metric-temp" : "imperial-temp"
+          }`}
+        >
           wind chill: {weatherData.daily[day].feels_like.day}
         </li>
         <li className="data percent">
@@ -23,7 +30,11 @@ const AdvancedInfo: React.FC<IAdvancedInfo> = ({ weatherData, city, day }) => {
         <li className="data pascals">
           pressure: {weatherData.daily[day].pressure}
         </li>
-        <li className="data kmh">
+        <li
+          className={`data ${
+            units === "metric" ? "metric-speed" : "imperial-speed"
+          }`}
+        >
           wind speed: {weatherData.daily[day].wind_speed}
         </li>
         <li className="data milimeters">
@@ -35,10 +46,18 @@ const AdvancedInfo: React.FC<IAdvancedInfo> = ({ weatherData, city, day }) => {
         <li className="data percent">
           clouds: {weatherData.daily[day].clouds}
         </li>
-        <li className="data">sunrise:</li>
-        <li className="data">sunset</li>
-        <li className="data">moonrise:</li>
-        <li className="data">moonset</li>
+        <li className="data">
+          sunrise: {unixToUtcTime(weatherData.daily[day].sunrise)}
+        </li>
+        <li className="data">
+          sunset: {unixToUtcTime(weatherData.daily[day].sunset)}
+        </li>
+        <li className="data">
+          moonrise: {unixToUtcTime(weatherData.daily[day].moonrise)}
+        </li>
+        <li className="data">
+          moonset: {unixToUtcTime(weatherData.daily[day].moonset)}
+        </li>
       </ul>
       {/* </div> */}
     </section>

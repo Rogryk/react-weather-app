@@ -3,25 +3,25 @@ import BasicInfo from "./BasicInfo";
 import AdvancedInfo from "./AdvancedInfo";
 import Alert from "../Alert";
 import Info__header from "./Info__header";
+import { unixToUtcDate } from "../utils/Functions";
 
 interface IInfo {
   weatherData: any;
   city: string;
   isBasicDisplay: boolean;
   day: number;
+  units: string;
 }
 
-const Info: React.FC<IInfo> = ({ weatherData, city, isBasicDisplay, day }) => {
+const Info: React.FC<IInfo> = ({
+  weatherData,
+  city,
+  isBasicDisplay,
+  day,
+  units,
+}) => {
   const [isAlertsDisplayed, setIsAlertsDisplayed] = useState(false);
-  const dateObject = new Date(weatherData.daily[day].dt * 1000);
-
-  const dateString = `${dateObject.getUTCDate()}.${
-    dateObject.getMonth() < 10
-      ? "0" + (dateObject.getMonth() + 1)
-      : dateObject.getMonth() + 1
-  }.${dateObject.getFullYear()}`;
-  // console.log(dateString);
-  console.log(weatherData);
+  const dateString = unixToUtcDate(weatherData.daily[day].dt);
 
   return (
     <section className="info">
@@ -34,13 +34,23 @@ const Info: React.FC<IInfo> = ({ weatherData, city, isBasicDisplay, day }) => {
               : weatherData.daily[day].temp.day
           }
           description={weatherData.daily[day].weather[0].description}
-          icon={weatherData.current.weather[0].icon}
+          icon={
+            day === 0
+              ? weatherData.current.weather[0].icon
+              : weatherData.daily[day].weather[0].icon
+          }
           city={city}
           alerts={weatherData.alerts}
           setIsAlertsDisplayed={setIsAlertsDisplayed}
+          units={units}
         />
       ) : (
-        <AdvancedInfo weatherData={weatherData} city={city} day={day} />
+        <AdvancedInfo
+          weatherData={weatherData}
+          city={city}
+          day={day}
+          units={units}
+        />
       )}
       {isAlertsDisplayed && (
         <Alert
